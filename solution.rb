@@ -1,18 +1,28 @@
 require 'pry'
 
   class InputFile
-    attr_accessor :test_cases, :total_lines, :file
+    attr_accessor :test_cases, :total_lines, :file, :array
     def initialize(filename)
       @filename = filename
       @string = File.open("#{filename}.txt").read
-      @test_cases = @file.lines.first.to_i
+      @test_cases = @string.lines.first.to_i
       @total_lines = self.total_of_lines
     end
 
     def action
-      file = File.new('#{@filename}.txt','r')
+      file = File.new("#{@filename}.txt",'r')
       file.each_line do |line|
-        binding.pry
+        string = line.dump.to_s
+        @array =  string.split(" ")
+      end
+      file.close
+      puts "------------------------------"
+      cont = -1
+      File.open("#{@filename}.txt") do |file|
+        while line = file.gets do
+          cont+=1;
+            @array[cont] = line.split(" ") if line.to_i != 0
+        end
       end
     end
 
@@ -30,11 +40,12 @@ require 'pry'
 
     
 
+
   test = InputFile.new('sample-input')
 
-  for i in 3..test.total_lines
-    puts i
-  end
+  #for i in 3..test.total_lines
+    #puts i
+  #end
 
 
 binding.pry
