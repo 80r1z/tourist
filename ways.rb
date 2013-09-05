@@ -20,22 +20,22 @@ class Ways
         end
       end
     end
+  end
 
+  def direct_flights
+    if (flight.from == 'A') && (flight.to == GOAL) 
+      @aux_arr << flight
+      push_ways_collection
+    end
   end
 
   def find_the_way
     @flights_collection.each do |flight|
-      if (flight.to == GOAL) && (flight.from == 'A')
+      if (flight.from == @first) && (flight.from != GOAL)
         @aux_arr << flight
-        push_ways_collection
-      else
-        if (flight.from == @first) && (flight.from != GOAL)
-          @aux_arr << flight
-          @first = flight.to
-        end
+        @first = flight.to
       end
     end
-
   end
 
   def push_ways_collection
